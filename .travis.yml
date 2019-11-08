@@ -1,9 +1,15 @@
 language: node_js
+
 node_js:
   - 10
 
-before_script:
-  - npm install
+install: npm install
 
-  env:
-- NODE_ENV=TEST
+# script: npm test
+# after_success: npm run coverage
+
+# deploy:
+#   provider: heroku
+#   api_key:
+#     secure: aca54826-b34f-4884-8726-791147653991
+#   app: studditavans
