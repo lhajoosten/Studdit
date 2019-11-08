@@ -1,0 +1,34 @@
+{
+  "name": "studdit",
+  "version": "1.0.0",
+  "description": "Back-end NoSQL assignment",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "mocha tests/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucJoostenNL/Studdit.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "NoSQL",
+    "Studdit"
+  ],
+  "author": "Luc Joosten, Lars Akkermans",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LucJoostenNL/Studdit/issues"
+  },
+  "homepage": "https://github.com/LucJoostenNL/Studdit#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.8",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.4",
+    "tracer": "^1.0.1"
+  }
+}
