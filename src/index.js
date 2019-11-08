@@ -10,7 +10,11 @@ const db = require("./config/dev").DB_URI;
 const app = express();
 
 mongoose
-  .connect(db, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
   .then(() => logger.info("DB Connected!"))
   .catch(err => logger.error(err));
 
