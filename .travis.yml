@@ -6,4 +6,4 @@ before_script:
   - npm install
 
   env:
-- NODE_ENV=TEST
+- NODE_ENV=TEST 
