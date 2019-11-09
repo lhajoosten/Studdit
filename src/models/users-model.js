@@ -2,8 +2,33 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
-  username: String,
-  password: String
+  name: {
+    type: String,
+    unique: true,
+    validate: {
+      validator: name => name.length > 2,
+      message: "Name must be longer than two characters."
+    },
+    required: [true, "Name is required."]
+  },
+  password: {
+    type: String,
+    validate: {
+      validator: password => password.length > 5,
+      message: "Password must be at least six characters."
+    },
+    required: [true, "Password is required."]
+  },
+  threads: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "thread"
+    }
+  ],
+  active: {
+    type: Boolean,
+    default: true
+  }
 });
 
 userSchema.pre("save", function(next) {
