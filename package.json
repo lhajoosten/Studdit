@@ -4,8 +4,7 @@
   "description": "Back-end NoSQL assignment",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "test": "mocha"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
