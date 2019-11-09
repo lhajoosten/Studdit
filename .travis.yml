@@ -1,15 +1,13 @@
 language: node_js
 
 node_js:
-  - 10
+  - "node"
+  - "10"
 
-install: npm install
+# before_script:
+#   - cd server
+#   - npm install chai chai-http mocha
+#   - npm install
 
-# script: npm test
-# after_success: npm run coverage
-
-# deploy:
-#   provider: heroku
-#   api_key:
-#     secure: aca54826-b34f-4884-8726-791147653991
-#   app: studditavans
+# script:
+#   - npm test
