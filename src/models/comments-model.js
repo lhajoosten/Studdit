@@ -3,11 +3,12 @@ const mongoose = require("mongoose");
 const commentSchema = new mongoose.Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    required: [true, "User is required to write a new comment!"]
   },
   content: {
     type: String,
-    required: [true, "Content is required!"]
+    required: [true, "Comment content is required!"]
   },
   thread: {
     type: mongoose.Schema.Types.ObjectId,
