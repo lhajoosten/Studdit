@@ -9,20 +9,20 @@ const userSchema = new mongoose.Schema({
       validator: name => name.length > 2,
       message: "Name must be longer than two characters."
     },
-    required: [true, "Name is required."]
+    required: [true, "Name is required!"]
   },
   password: {
     type: String,
     validate: {
-      validator: password => password.length > 5,
-      message: "Password must be at least six characters."
+      validator: password => password.length > 7,
+      message: "Password must be at least eight characters."
     },
-    required: [true, "Password is required."]
+    required: [true, "Password is required!"]
   },
   threads: [
     {
       type: Schema.Types.ObjectId,
-      ref: "thread"
+      ref: "Thread"
     }
   ],
   active: {
