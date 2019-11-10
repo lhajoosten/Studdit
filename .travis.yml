@@ -1,12 +1,11 @@
 language: node_js
 
 node_js:
-  - "node"
   - "10"
 
-before_script:
-  - npm install chai chai-http mocha
-  - npm install
+# before_script:
+#   - npm install chai chai-http mocha
+#   - npm install
 
 # script:
 #   - npm run posinstall
