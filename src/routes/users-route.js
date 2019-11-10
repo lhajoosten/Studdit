@@ -9,4 +9,6 @@ module.exports = app => {
   app.get("/api/users/:username", controller.getUserByUserame);
   app.put("/api/users/:username", controller.updateUserByUsername);
   app.delete("/api/users/:username", controller.deleteUserByUsername);
+
+  app.post('/api/users/login', controller.loginUser);
 };
