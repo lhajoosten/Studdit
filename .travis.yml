@@ -8,8 +8,8 @@ before_script:
   - npm install chai chai-http mocha
   - npm install
 
-script:
-  - npm run posinstall
+# script:
+#   - npm run posinstall
 
 deploy:
   provider: heroku
