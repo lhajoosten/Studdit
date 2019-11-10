@@ -16,6 +16,4 @@ deploy:
   api_key:
     secure: aca54826-b34f-4884-8726-791147653991
   app: nosql-studdit
-  on:
-    repo: LucJoostenNL/Studdit
 
