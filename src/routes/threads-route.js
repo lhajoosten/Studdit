@@ -2,11 +2,14 @@ const controller = require("../controllers/threads-controller");
 
 module.exports = app => {
   // Thread endpoints
-  app.post("/api/thread/", controller.postThread);
-  app.put("/api/thread/", controller.updateThread);
-  app.delete("/api/thread/", controller.deleteThread);
+  app.post("/api/threads/", controller.postThread);
   app.get("/api/threads", controller.getAllThreads);
-  app.get("/api/thread/:id", controller.getThreadById);
-  app.post("/api/thread/upvote", controller.upVoteThread);
-  app.post("/api/thread/upvote", controller.downVoteThread);
+
+  app.get("/api/threads/:id", controller.getThreadById);
+  app.put("/api/threads/:id", controller.updateThreadById);
+  app.delete("/api/threads/:id", controller.deleteThreadById);
+
+  app.post("/api/threads/:id/comment", controller.postCommentToThread);
+  app.post("/api/threads/:id/upvote", controller.upVoteThreadById);
+  app.post("/api/threads/:id/downvote", controller.downVoteThreadById);
 };
