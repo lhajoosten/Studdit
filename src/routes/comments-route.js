@@ -3,7 +3,7 @@ const controller = require("../controllers/comments-controller");
 module.exports = app => {
   // Comment endpoints
   app.post("/api/comments", controller.postComment);
-  app.get("/api/comments", controlelr.getAllComments);
+  app.get("/api/comments", controller.getAllComments);
 
   app.get("/api/comments/:id", controller.getCommentById);
   app.put("/api/comments/:id", controller.updateCommentById);
