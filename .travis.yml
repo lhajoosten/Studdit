@@ -4,10 +4,18 @@ node_js:
   - "node"
   - "10"
 
-# before_script:
-#   - cd server
-#   - npm install chai chai-http mocha
-#   - npm install
+before_script:
+  - npm install chai chai-http mocha
+  - npm install
 
-# script:
-#   - npm test
+script:
+  - npm run posinstall
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: aca54826-b34f-4884-8726-791147653991
+  app: nosql-studdit
+  on:
+    repo: LucJoostenNL/Studdit
+
