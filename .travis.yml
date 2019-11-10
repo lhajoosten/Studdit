@@ -1,19 +1,9 @@
 language: node_js
-
 node_js:
-  - "10"
-
-# before_script:
-#   - npm install chai chai-http mocha
-#   - npm install
-
-# script:
-#   - npm run posinstall
+  - 10
 
 deploy:
   provider: heroku
   api_key:
-    secure: eccd4387-636e-4414-ab6c-6b6ed99f4ee5
-
-  app: nosql-studdit
+    secure: "eccd4387-636e-4414-ab6c-6b6ed99f4ee5"
 
