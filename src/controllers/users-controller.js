@@ -60,42 +60,20 @@ module.exports = {
     loginUser: (req, res, next) => {
         const body = req.body;
         let h;
-        bcrypt.genSalt(10, function(err, salt) {
-            if (err) {
-                return next(err);
-            }
-            console.log(req);
-            bcrypt.hash(body.password, salt, function(err, hash) {
-                if (err) {
-                    return next(err);
+
+        User.findOne({ name: body.username})
+            .then((user) => {
+                if ( !bcrypt.compareSync(body.password, user.password) ) {
+                    let errorObj = {
+                        message: "Login not correct",
+                        code: 400
+                    };
+
+                    next(errorObj);
+                } else {
+                    const token = auth.generateJWT(user);
+                    res.status(200).json({result: token});
                 }
-
-                h = hash;
-
-                User.findOne({name: body.username})
-                    .then((user) => {
-                        if ( user.password === h) {
-                            const token = auth.generateJWT(user);
-                            res.status(200).json({result: token});
-                        } else {
-                            let errorObj = {
-                                message: "Login not correct",
-                                code: 400
-                            };
-
-                            next(errorObj);
-                        }
-                    })
-                    .catch(() => {
-                        let errorObj = {
-                            message: "Login not correct",
-                            code: 400
-                        };
-
-                        next(errorObj);
-                    });
             });
-        });
-
     }
 };

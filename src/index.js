@@ -24,6 +24,7 @@ mongoose
   .then(() => logger.info("DB Connected!"))
   .catch(err => logger.error(err));
 
+
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cors());

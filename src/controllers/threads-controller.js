@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const auth = require('../services/authentication');
 const Thread = require('../models/threads-model');
 const Comment = require('../models/comments-model');
 
@@ -7,7 +8,7 @@ module.exports = {
         const body = req.body;
 
         let thread = new Thread({
-            author: body.author,
+            author: req.userId,
             title: body.title,
             content: body.title
         });
@@ -24,6 +25,12 @@ module.exports = {
             .populate('author')
             .then((threads) => {
                res.status(200).json({ result: threads });
+            })
+            .catch((err) => {
+                next({
+                    message: 'something went wrong',
+                    code: 400
+                });
             });
     },
 
@@ -65,7 +72,7 @@ module.exports = {
         const id = req.params.id;
         const body = req.body;
         let comment = new Comment({
-            author: body.author,
+            author: req.userId,
             content: body.content
         });
         Thread.findOne({_id: id})

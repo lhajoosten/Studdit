@@ -1,15 +1,16 @@
 const controller = require("../controllers/threads-controller");
+const auth = require('../services/authentication');
 
 module.exports = app => {
   // Thread endpoints
-  app.post("/api/threads/", controller.postThread);
-  app.get("/api/threads", controller.getAllThreads);
+  app.post("/api/threads/", auth.validateToken, controller.postThread);
+  app.get("/api/threads", auth.validateToken,  controller.getAllThreads);
 
-  app.get("/api/threads/:id", controller.getThreadById);
-  app.put("/api/threads/:id", controller.updateThreadById);
-  app.delete("/api/threads/:id", controller.deleteThreadById);
+  app.get("/api/threads/:id", auth.validateToken,  controller.getThreadById);
+  app.put("/api/threads/:id", auth.validateToken,  controller.updateThreadById);
+  app.delete("/api/threads/:id", auth.validateToken,  controller.deleteThreadById);
 
-  app.post("/api/threads/:id/comment", controller.postCommentToThread);
-  app.post("/api/threads/:id/upvote", controller.upVoteThreadById);
-  app.post("/api/threads/:id/downvote", controller.downVoteThreadById);
+  app.post("/api/threads/:id/comment", auth.validateToken,  controller.postCommentToThread);
+  app.post("/api/threads/:id/upvote", auth.validateToken,  controller.upVoteThreadById);
+  app.post("/api/threads/:id/downvote", auth.validateToken,  controller.downVoteThreadById);
 };
