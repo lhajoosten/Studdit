@@ -33,7 +33,7 @@ npm install
 | POST - /api/threads/:id/upvote   | Upvote a thread by given id      |
 | POST - /api/threads/:id/downvote     | Downvote a thread by given id      |
 
-### Thread
+### Comment
 
 | Endpoint | Action|
 | ------------- |:-------------|
