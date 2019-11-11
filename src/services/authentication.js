@@ -53,7 +53,10 @@ module.exports = {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
       logger.warn('Validate token failed: ', errorObject.message);
-      return next(errors.AUTH_HEADER_MISSING);
+      return next({
+        message: 'No authorization',
+        code: 404
+      });
     }
     const token = authHeader.substring(7, authHeader.length);
     jwt.verify(token, 'secret', (err, payload) => {
