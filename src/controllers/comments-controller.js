@@ -23,6 +23,9 @@ module.exports = {
 
     getAllComments: (req, res, next) => {
         Comment.find({})
+            .populate('author')
+            .populate('thread')
+            .populate('comments')
             .then((comments) => {
                 console.log(comments);
                 res.status(200).json({ result: comments });
@@ -33,6 +36,9 @@ module.exports = {
         let commentId = req.params.id;
 
         Comment.find({_id: commentId})
+            .populate('author')
+            .populate('thread')
+            .populate('comments')
             .then((comment) => {
                 res.status(200).json({ result: comment });
             })
