@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
+const logger = require('../config/dev').logger;
 
 module.exports = {
   generateJWT: user => {
-    const tokenData = { username: user.username, id: user.id };
+    const tokenData = { username: user.name, id: user.id };
     return jwt.sign({ user: tokenData }, "secret", {
       algorithm: "HS256",
       expiresIn: 86400 // expires in 24 hours
@@ -44,5 +45,39 @@ module.exports = {
       return null;
     }
     return token.user.id;
+  },
+
+  validateToken: (req, res, next) => {
+    logger.info('validateToken aangeroepen');
+    // logger.debug(req.headers)
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      logger.warn('Validate token failed: ', errorObject.message);
+      return next(errors.AUTH_HEADER_MISSING);
+    }
+    const token = authHeader.substring(7, authHeader.length);
+    jwt.verify(token, 'secret', (err, payload) => {
+      if (err) {
+        logger.warn('Validate token failed: ', errorObject.message);
+        next({
+          message: 'not authorized',
+          code: 404
+        });
+      }
+      //logger.trace('payload', payload);
+      if (payload.user && payload.user.id) {
+        logger.debug('token is valid', payload);
+        // User heeft toegang. Voeg UserId uit payload toe aan
+        // request, voor ieder volgend endpoint.
+        req.userId = payload.user.id;
+        req.username = payload.user.username;
+        req.token = token;
+        next();
+      } else {
+        logger.warn('Validate token failed: ', errorObject.message);
+        next({message: 'Missing user id',
+        code: 404});
+      }
+    })
   }
 };

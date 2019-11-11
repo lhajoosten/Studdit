@@ -1,17 +1,24 @@
 const mongoose = require('mongoose');
 const Comment = require('../models/comments-model');
+const Thread = require('../models/threads-model');
 
 module.exports = {
     postComment: (req, res, next) => {
         const body = req.body;
 
         let comment = new Comment({
-            author: body.author,
+            author: req.userId,
             content: body.content,
             thread: body.thread
         });
 
-        comment.save().then(() => res.status(200).json({result: "OK"}));
+        comment.save()
+            .then(() => Thread.findOne({_id: body.thread}))
+            .then((thread) => {
+                thread.comments.push(comment);
+                thread.save();
+            })
+            .then(() => res.status(200).json({result: "OK"}));
     },
 
     getAllComments: (req, res, next) => {
@@ -59,7 +66,7 @@ module.exports = {
         const id = req.params.id;
         const body = req.body;
         let c = new Comment({
-            author: body.author,
+            author: req.userId,
             content: body.content
         });
         Comment.findOne({_id: id})
