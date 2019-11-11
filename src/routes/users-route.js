@@ -1,12 +1,15 @@
 const controller = require("../controllers/users-controller");
+const auth = require('../services/authentication');
 
 module.exports = app => {
   // User endpoints
-  app.get("/api/users", controller.index);
-  app.post("/api/users", controller.create);
+  app.get("/api/users", auth.validateToken,  controller.getAllUsers);
+  app.post("/api/users", auth.validateToken,  controller.createUser);
 
   // /:username -> on base of the username
-  app.get("/api/users/:username", controller.read);
-  app.put("/api/users/:username", controller.edit);
-  app.delete("/api/users/:username", controller.delete);
+  app.get("/api/users/:username", auth.validateToken,  controller.getUserByUserame);
+  app.put("/api/users/:username", auth.validateToken,  controller.updateUserByUsername);
+  app.delete("/api/users/:username", auth.validateToken,  controller.deleteUserByUsername);
+
+  app.post('/api/users/login', controller.loginUser);
 };

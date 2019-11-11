@@ -9,6 +9,12 @@ const db = require("./config/dev").DB_URI;
 
 const app = express();
 
+//require('./config/dev').createMockData();
+
+const commentRoutes = require('./routes/comments-route');
+const threadRoutes = require('./routes/threads-route');
+const userRoutes = require('./routes/users-route');
+
 mongoose
   .connect(db, {
     useNewUrlParser: true,
@@ -18,9 +24,14 @@ mongoose
   .then(() => logger.info("DB Connected!"))
   .catch(err => logger.error(err));
 
+
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cors());
+
+commentRoutes(app);
+threadRoutes(app);
+userRoutes(app);
 
 // Handle endpoint not found.
 app.all("*", function(req, res, next) {
