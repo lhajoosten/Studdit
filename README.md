@@ -1,6 +1,13 @@
 # Studdit   [![Build Status](https://travis-ci.com/LucJoostenNL/Studdit.svg?branch=master)](https://travis-ci.com/LucJoostenNL/Studdit)
 Studdit is a platform to ask questions, answer them and share comments between users. The platform allows us to post a comment on popular and non-popular posts, but also to search for specific posts. It is also possible to see what your friends and the frieds of your friends are doing.
 
+# Back-end 
+* Node.JS   [![Node version](https://img.shields.io/badge/Node.js-10.15.3-green)](https://img.shields.io/badge/Node.js-10.15.3-green)
+* Mongoose  [![npm version](https://badge.fury.io/js/mongoose.svg)](https://badge.fury.io/js/mongoose)
+* NoSQL MongoDB 
+* Express.JS:   [![npm version](https://badge.fury.io/js/express.svg)](https://badge.fury.io/js/express)
+
+
 ## Project setup
 ```
 npm install
@@ -47,3 +54,10 @@ npm install
 | POST - /api/comments/:id/comment  | Post a comment to a comment by given id |
 | POST - /api/comments/:id/upvote   | Upvote a comment by given id      |
 | POST - /api/comments/:id/downvote     | Downvote a comment by given id      |
+
+### Friendship
+
+| Endpoint | Action|
+| ------------- |:-------------|
+| POST - /api/friendships   | Create a friendship with a user |
+| DELETE - /api/friendships   | Delete a friendship with a user      |
