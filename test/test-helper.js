@@ -1,16 +1,20 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const logger = require('../src/config/dev').logger;
 
 mongoose.Promise = global.Promise;
 
 before(done => {
-  mongoose.connect("mongodb://localhost/user-tests", {
+  mongoose.connect('mongodb://localhost/user-tests', {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
   mongoose.connection
-    .once("open", () => {
+    .once('open', () => {
       done();
     })
+    .on('error', error => {
+      logger.warn('Warning', error);
+    });
 });
 
 beforeEach(done => {
@@ -22,6 +26,4 @@ beforeEach(done => {
       });
     });
   });
-
-
 });
