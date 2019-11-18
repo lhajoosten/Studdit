@@ -4,7 +4,7 @@ const logger = require('../src/config/dev').logger;
 mongoose.Promise = global.Promise;
 
 before(done => {
-  mongoose.connect('mongodb://localhost/user-tests', {
+  mongoose.connect('mongodb://localhost/user-tests?socketTimeoutMS=90000', {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
@@ -14,6 +14,7 @@ before(done => {
     })
     .on('error', error => {
       logger.warn('Warning', error);
+      done();
     });
 });
 
