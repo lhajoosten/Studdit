@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
+    unique: [true, 'Username must be unique'],
     validate: {
       validator: name => name.length > 2,
       message: "Name must be longer than two characters!"
