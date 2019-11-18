@@ -31,10 +31,44 @@ module.exports = {
           // if the user was not found return status 404 with user not found message
           if (!friend) {
             return res.status(404).Json({ message: 'Friend was not found!' });
-          } 
+          }
           // else continue to create friendship in neo4j database with session
           else {
-              // TODO: creating friendship in neo4j database
+            // checking in the neo4j db if this persons already exists
+            session
+              .run('MATCH (n:Person { name: $user }) return n', {user: user})
+              .then(result => {
+                // if person does not exist yet, create this person
+                if (result.records.length === 0) {
+                  session.run('CREATE (a:Person {name: $name}) RETURN a', {name: user});
+                }
+              })
+              .then(() => {session.run('MATCH (n:Person { name: $friend }) return n', {friend: friend})
+                  .then(result => {
+                    // if person does not exist yet, create this person
+                    if (result.records.length === 0) {
+                      session.run('CREATE (a:Person {name: $name}) RETURN a', {
+                        name: friend
+                      });
+                    }
+                  })
+                  .then(() => {
+                    // checking if the friendship already exists
+                    session.run('MATCH (:Person {name: $user})-[r: friendship]-(:Person {name: $friend}) return r',{ user: user, friend: friend })
+                      .then(result => {
+                        // if friendship does not exist yet, create a new friendship between user an friend
+                        if (result.records.length === 0) {
+                          session.run('MATCH (a:Person),(b:Person) ' + 'WHERE a.name = $user AND b.name = $friend ' + 'CREATE (a)-[r:friendship]->(b)',{ user: user, friend: friend })
+                            .then(() => {
+                              session.close();
+                            });
+                        }
+                      });
+                  });
+                  // if everything went good then send a status 201 back for creating successfully a new friendship between user and friend
+              }).then(() => {
+                res.status(201).json({message: 'Created successfully a new friendship!'});
+            });
           }
         });
       }
