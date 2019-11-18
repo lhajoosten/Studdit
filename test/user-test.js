@@ -2,17 +2,27 @@ const assert = require("assert");
 const User = require("../src/models/users-model");
 
 describe("Creating records", () => {
-  let username = "Luc";
+  let username = "Luccccc";
+  let u;
+
+  beforeEach((done) => {
+    u = new User({ name: username, password: "test1234" });
+    u.save()
+        .then(() => {
+          done();
+        });
+  });
+
   it("Creates a new user", (done) => {
     let user = new User({
-      username: "Luc",
-      password: "test123"
+      name: "username",
+      password: "test123!"
     });
 
     user.save()
-        .then(() => User.findOne({ name: "Luc" }))
+        .then(() => User.findOne({ name: "username" }))
         .then((user) => {
-          assert(user.name === "Luc");
+          assert(user.name === "username");
           done();
         });
   });
@@ -28,7 +38,7 @@ describe("Creating records", () => {
   it("Gets a user by username", (done) => {
     User.findOne({name: username})
         .then((user) => {
-          assert(user.name === "Luc");
+          assert(user.name === username);
           done();
         });
   });
@@ -47,7 +57,7 @@ describe("Creating records", () => {
     User.findOneAndDelete({name: username})
         .then(() => User.findOne({name: username}))
         .then((user) => {
-          assert(!user.name);
+          assert(!user);
           done();
         });
   });
