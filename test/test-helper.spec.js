@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 
 before(done => {
   mongoose
-    .connect('mongodb://localhost/user-tests', {
+    .connect('mongodb+srv://lhajoost:Kaya1412@studdit-eklle.mongodb.net/StudditTestDb?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false
