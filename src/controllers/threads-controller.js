@@ -10,7 +10,7 @@ module.exports = {
         let thread = new Thread({
             author: req.userId,
             title: body.title,
-            content: body.title
+            content: body.content
         });
 
         thread.save()
