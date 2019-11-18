@@ -1,4 +1,4 @@
-const controller = require("../controller/friendships-controller");
+const controller = require("../controllers/friendships-controller");
 const auth = require('../services/authentication');
 
 module.exports = app => {
