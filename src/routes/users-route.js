@@ -4,7 +4,7 @@ const auth = require('../services/authentication');
 module.exports = app => {
   // User endpoints
   app.get("/api/users", auth.validateToken,  controller.getAllUsers);
-  app.post("/api/users", auth.validateToken,  controller.createUser);
+  app.post("/api/users", controller.createUser);
 
   // /:username -> on base of the username
   app.get("/api/users/:username", auth.validateToken,  controller.getUserByUserame);

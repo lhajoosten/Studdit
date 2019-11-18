@@ -3,8 +3,8 @@ const session = driver.session();
 const User = require('../models/users-model');
 
 module.exports = {
-  create(req, res) {
-    const user = req.userId.username;
+  addFriendship(req, res) {
+    const user = req.username;
     const friend = req.body.friendname;
 
     if (user === undefined || friend === undefined) {
@@ -12,26 +12,18 @@ module.exports = {
     }
 
     // looking up the user if he/she exists in the mongo database
-    User.findOne({ name: user }).then((err, user) => {
-      // if there are any errors return status 500 with error object
-      if (err) {
-        return res.status(500).json({ err });
-      }
+    User.findOne({ name: user }).then((result) => {
       // if the user was not found return status 404 with user not found message
-      if (!user) {
-        return res.status(404).Json({ message: 'User was not found!' });
+      if (!result) {
+        return res.status(404).json({ message: 'User was not found!' });
       }
       // else continue to look for the friend
       else {
         // looking up the friend if he/she exists in the mongo database
-        User.findOne({ name: friend }).then((err, friend) => {
-          // if there are any errors return status 500 with error object
-          if (err) {
-            return res.status(500).json({ err });
-          }
+        User.findOne({ name: friend }).then((result) => {
           // if the user was not found return status 404 with user not found message
-          if (!friend) {
-            return res.status(404).Json({ message: 'Friend was not found!' });
+          if (!result) {
+            return res.status(404).json({ message: 'Friend was not found!' });
           }
           // else continue to create friendship in neo4j database with session
           else {
@@ -59,10 +51,10 @@ module.exports = {
                       .then(result => {
                         // if friendship does not exist yet, create a new friendship between user an friend
                         if (result.records.length === 0) {
-                          session.run('MATCH (a:Person),(b:Person) ' + 'WHERE a.name = $user AND b.name = $friend ' + 'CREATE (a)-[r:friendship]->(b)',{ user: user, friend: friend })
-                            .then(() => {
+                          session.run('MATCH (a:Person),(b:Person) ' + 'WHERE a.name = $user AND b.name = $friend ' + 'CREATE (a)-[r:friendship]->(b) ' + 'CREATE (b)-[:friendship]->(a) ',{ user: user, friend: friend })
+                           .then(() => {
                               session.close();
-                            });
+                            })
                         }
                       });
                   });
@@ -75,12 +67,15 @@ module.exports = {
       }
     });
   },
-  deleteFriendship(res, req) {
-    const user = req.userId.username;
-    const friend = req.body.friendname
+  deleteFriendship(req, res) {
+    const friend = req.body.friendname;
+
+    if (friend === undefined) {
+      return res.status(409).json({message: 'friend was not found'})
+    }
 
     // checking if friendship exists between user and friend, if so then delete their friendship
-    session.run('MATCH (:Person {name: $user})-[r: friendship]-(:Person {name: $friend}) DELETE r',{ user: user, friend: friend })
+    session.run('MATCH (n { name: $friend }) DETACH DELETE n',{ friend: friend })
       .then(() => {
         // closing session 
         session.close()
@@ -88,4 +83,4 @@ module.exports = {
         res.status(200).json({message: 'Friendship successfully deleted!'});
       });
   }
-};
+}

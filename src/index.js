@@ -14,6 +14,7 @@ const app = express();
 const commentRoutes = require('./routes/comments-route');
 const threadRoutes = require('./routes/threads-route');
 const userRoutes = require('./routes/users-route');
+const friendshipRoutes = require('./routes/friendships-route');
 
 mongoose
   .connect(db, {
@@ -32,6 +33,7 @@ app.use(cors());
 commentRoutes(app);
 threadRoutes(app);
 userRoutes(app);
+friendshipRoutes(app);
 
 // Handle endpoint not found.
 app.all("*", function(req, res, next) {
