@@ -1,5 +1,6 @@
 const Thread = require('../src/models/threads-model');
 const User = require('../src/models/users-model');
+const Comment = require('../src/models/comments-model');
 const assert = require('assert');
 
 describe("Thread tests", () => {
@@ -27,6 +28,7 @@ describe("Thread tests", () => {
                thread.save()
                    .then(() => Thread.find({}))
                    .then((t) => {
+                       thread = t[0];
                        thread_id = t[0]._id;
                        done();
                    });
@@ -92,12 +94,32 @@ describe("Thread tests", () => {
            });
    });
 
+   it('Adds a comment to a thread', (done) => {
+       let comment = new Comment({
+           author: user,
+           thread: thread,
+           content: "This is a comment on the thread"
+       });
+
+       comment.save()
+           .then(() => Comment.findOne({thread: thread_id}))
+           .then((c) => {
+               thread.comments.push(c);
+               thread.save()
+                   .then(() => Thread.findOne({_id: thread_id}))
+                   .then((t)=> {
+                       assert(t.comments.length > 0);
+                       done();
+                   });
+           });
+   });
+
    it("Deletes a thread by id", (done) => {
        Thread.findOneAndDelete({_id: thread_id})
            .then(() => Thread.findOne({_id: thread_id}))
            .then((t) => {
                assert(!t);
                done();
-           })
+           });
    });
 });
