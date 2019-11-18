@@ -4,17 +4,19 @@ const logger = require('../src/config/dev').logger;
 mongoose.Promise = global.Promise;
 
 before(done => {
-  mongoose.connect('mongodb://localhost/user-tests?socketTimeoutMS=90000', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
-  mongoose.connection
-    .once('open', () => {
+  mongoose
+    .connect('mongodb://localhost/user-tests', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false
+    })
+    .then(() => {
+      logger.info('Connected to the database');
       done();
     })
-    .on('error', error => {
-      logger.warn('Warning', error);
-      done();
+    .catch(err => {
+      logger.error('Database connection failed');
+      done(err);
     });
 });
 
