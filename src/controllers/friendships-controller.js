@@ -1,4 +1,5 @@
-const session = require('../services//neo4j').driver();
+const driver = require('../services//neo4j').driver;
+const session = driver.session();
 const User = require('../models/users-model');
 
 module.exports = {
@@ -73,5 +74,18 @@ module.exports = {
         });
       }
     });
+  },
+  deleteFriendship(res, req) {
+    const user = req.body.username;
+    const friend = req.body.friendname
+
+    // checking if friendship exists between user and friend, if so then delete their friendship
+    session.run('MATCH (:Person {name: $user})-[r: friendship]-(:Person {name: $friend}) DELETE r',{ user: user, friend: friend })
+      .then(() => {
+        // closing session 
+        session.close()
+      }).then(() => {
+        res.status(200).json({message: 'Friendship successfully deleted!'});
+      });
   }
 };
