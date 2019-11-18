@@ -4,16 +4,19 @@ const logger = require('../src/config/dev').logger;
 mongoose.Promise = global.Promise;
 
 before(done => {
-  mongoose.connect('mongodb://localhost/user-tests', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
-  mongoose.connection
-    .once('open', () => {
+  mongoose
+    .connect('mongodb+srv://lhajoost:Kaya1412@studdit-eklle.mongodb.net/StudditTestDb?retryWrites=true&w=majority', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false
+    })
+    .then(() => {
+      logger.info('Connected to the database');
       done();
     })
-    .on('error', error => {
-      logger.warn('Warning', error);
+    .catch(err => {
+      logger.error('Database connection failed');
+      done(err);
     });
 });
 
