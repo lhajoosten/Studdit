@@ -4,7 +4,7 @@ const User = require('../models/users-model');
 
 module.exports = {
   create(req, res) {
-    const user = req.body.username;
+    const user = req.userId.username;
     const friend = req.body.friendname;
 
     if (user === undefined || friend === undefined) {
@@ -76,7 +76,7 @@ module.exports = {
     });
   },
   deleteFriendship(res, req) {
-    const user = req.body.username;
+    const user = req.userId.username;
     const friend = req.body.friendname
 
     // checking if friendship exists between user and friend, if so then delete their friendship
