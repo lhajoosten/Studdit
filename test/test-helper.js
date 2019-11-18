@@ -11,9 +11,6 @@ before(done => {
     .once("open", () => {
       done();
     })
-    .on("error", error => {
-      logger.warn("Warning", error);
-    });
 });
 
 beforeEach(done => {
