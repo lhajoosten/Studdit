@@ -2,4 +2,4 @@ language: node_js
 node_js:
   - 10
 
-install: travis_wait mvn install
+install: travis_wait npm install
