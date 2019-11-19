@@ -49,38 +49,28 @@ module.exports = {
 
   validateToken: (req, res, next) => {
     logger.info('validateToken aangeroepen');
-    // logger.debug(req.headers)
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      logger.warn('Validate token failed: ', errorObject.message);
-      return next({
-        message: 'No authorization',
-        code: 404
-      });
+      logger.warn('Validate token failed! No authorization header');
+      return res.status(401).json({ message: 'No authorization header included', code: 401 });
     }
     const token = authHeader.substring(7, authHeader.length);
-    jwt.verify(token, 'secret', (err, payload) => {
+    jwt.verify(token, 'secret', err => {
       if (err) {
-        logger.warn('Validate token failed: ', errorObject.message);
-        next({
-          message: 'not authorized',
-          code: 404
-        });
+        logger.warn('Validate token failed! Not Authorized ');
+        return res.status(401).json({ message: 'Not authorized', code: 401 });
       }
-      //logger.trace('payload', payload);
-      if (payload.user && payload.user.id) {
-        logger.debug('token is valid', payload);
-        // User heeft toegang. Voeg UserId uit payload toe aan
-        // request, voor ieder volgend endpoint.
+      const payload = jwt.decode(token);
+
+      if (payload.user.username && payload.user.id) {
         req.userId = payload.user.id;
         req.username = payload.user.username;
         req.token = token;
         next();
       } else {
-        logger.warn('Validate token failed: ', errorObject.message);
-        next({message: 'Missing user id',
-        code: 404});
+        logger.warn('Validate token failed! No user id');
+        next({ message: 'Missing user id', code: 404 });
       }
-    })
+    });
   }
 };
