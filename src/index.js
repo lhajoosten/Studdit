@@ -55,3 +55,6 @@ app.use((error, req, res, next) => {
 app.listen(PORT, function() {
   logger.debug("Server is running on port: " + PORT);
 });
+
+
+module.exports = app

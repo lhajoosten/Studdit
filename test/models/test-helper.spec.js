@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const logger = require('../src/config/dev').logger;
+const logger = require('../../src/config/dev').logger;
 
 mongoose.Promise = global.Promise;
 

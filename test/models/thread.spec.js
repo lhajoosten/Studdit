@@ -1,6 +1,6 @@
-const Thread = require('../src/models/threads-model');
-const User = require('../src/models/users-model');
-const Comment = require('../src/models/comments-model');
+const Thread = require('../../src/models/threads-model');
+const User = require('../../src/models/users-model');
+const Comment = require('../../src/models/comments-model');
 const assert = require('assert');
 
 describe("Thread tests", () => {
