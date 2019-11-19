@@ -11,7 +11,7 @@ const username = 'TestUser404';
 const password = '8080751807';
 
 let token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiSm9lIiwiaWQiOiI1ZGM4MjYwNmM5ODliYTBlMTBhY2NjYTEifSwiaWF0IjoxNTc0MTA0MTMxLCJleHAiOjE1NzQxOTA1MzF9.jHCzX90v3yLW2Ga0R6FyhTHPYhoSi3IIRr9T6XXFf9E';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoibGFyc2llMTIiLCJpZCI6IjVkZDQ0MTgxZTI4ZmE3NDFmNDhmZWNhYSJ9LCJpYXQiOjE1NzQxOTE1MDAsImV4cCI6MTU3NDI3NzkwMH0.c-ybpsos7Kf5um5bf0JI-xA07nOChwasZVrbc2jjlbo';
 
 describe('API User endpoints', () => {
   it('Should not get all users without Authorization header', done => {
