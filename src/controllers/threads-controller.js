@@ -14,8 +14,9 @@ module.exports = {
         });
 
         thread.save()
-            .then(() => {
-                res.status(200).json({result: "OK"});
+            .then(() => Thread.findOne({author: req.userId, title: body.title, content: body.content}))
+            .then((t) => {
+                res.status(200).json({result: t});
             });
     },
 
@@ -36,7 +37,7 @@ module.exports = {
 
     getThreadById: (req, res, next) => {
         const id = req.params.id;
-        Thread.find({_id: id})
+        Thread.findOne({_id: id})
             .populate('comments')
             .populate('author')
             .then((thread) => {
@@ -49,7 +50,7 @@ module.exports = {
         const body = req.body;
 
         Thread.findOneAndUpdate({_id: id}, body)
-            .then(() => Thread.findOne({_id, id}))
+            .then(() => Thread.findById(id))
             .then((thread) => {
                 res.status(200).json({result: thread});
             });
@@ -57,31 +58,36 @@ module.exports = {
 
     deleteThreadById: (req, res, next) => {
         const id = req.params.id;
-        let t;
-        Thread.findOne({_id: id})
+        
+        Thread.findOneAndDelete({_id: id})
             .then((thread) => {
-                t = thread;
-            })
-            .then(() => Thread.findOneAndDelete({_id: id}))
-            .then(() => {
-                res.status(200).json({result: t});
+                res.status(200).json({result: thread});
             });
     },
 
     postCommentToThread: (req, res, next) => {
         const id = req.params.id;
         const body = req.body;
-        let comment = new Comment({
-            author: req.userId,
-            content: body.content
-        });
+
         Thread.findOne({_id: id})
             .then((thread) => {
-                comment.thread = thread;
-                comment.save();
-                thread.comments.push(comment);
-                thread.save();
-                res.status(200).json({result: thread});
+                let comment = new Comment({
+                    author: req.userId,
+                    content: body.content,
+                    thread: thread
+                });
+                comment.save()
+                    .then(() => Comment.findOne({author: req.userId, content: body.content, thread: thread._id}))
+                    .then((c) => {
+                        thread.comments.push(c);
+                        thread.save()
+                            .then(() => Thread.findById(thread._id))
+                            .then((t) => {
+                                res.status(200).json({result: t});
+                            });
+
+                    });
+
             });
 
 
