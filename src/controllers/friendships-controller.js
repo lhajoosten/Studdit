@@ -75,7 +75,7 @@ module.exports = {
     }
 
     // checking if friendship exists between user and friend, if so then delete their friendship
-    session.run('MATCH (:Person {Name: $user})-[r:friendship]-(:Person {Name: $friend}) DELETE r',{ user: user, friend: friend })
+    session.run('MATCH (n { name: $friend }) DETACH DELETE n',{ friend: friend })
       .then(() => {
         // closing session 
         session.close()
