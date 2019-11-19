@@ -1,7 +1,7 @@
 const assert = require('assert');
-const User = require('../src/models/users-model');
-const Thread = require('../src/models/threads-model');
-const Comment = require('../src/models/comments-model');
+const User = require('../../src/models/users-model');
+const Thread = require('../../src/models/threads-model');
+const Comment = require('../../src/models/comments-model');
 
 describe('Comments tests', () => {
    let user;

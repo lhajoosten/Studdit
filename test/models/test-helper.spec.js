@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const logger = require('../src/config/dev').logger;
+const logger = require('../../src/config/dev').logger;
 
 mongoose.Promise = global.Promise;
 
 before(done => {
   mongoose
-    .connect('mongodb+srv://lhajoost:Kaya1412@studdit-eklle.mongodb.net/StudditTestDb?retryWrites=true&w=majority', {
+    .connect('mongodb+srv://lhajoost:Kaya1412@studdit-eklle.mongodb.net/test?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false
