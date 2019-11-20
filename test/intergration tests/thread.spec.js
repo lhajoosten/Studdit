@@ -9,7 +9,7 @@ const User = require('../../src/models/users-model');
 chai.should();
 chai.use(chaiHttp);
 
-const thread_id = '5dc82606c989ba0e10accca3';
+
 const username = 'TestUser404';
 const password = '8080751807';
 
@@ -17,7 +17,7 @@ let token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiSm9lIiwiaWQiOiI1ZGM4MjYwNmM5ODliYTBlMTBhY2NjYTEifSwiaWF0IjoxNTc0MTA0MTMxLCJleHAiOjE1NzQxOTA1MzF9.jHCzX90v3yLW2Ga0R6FyhTHPYhoSi3IIRr9T6XXFf9E';
 
 let correctToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVua2llMTIiLCJpZCI6IjVkZDQyN2IwZDZiMzQ1MDZlOGEwNWE1NiJ9LCJpYXQiOjE1NzQxODUxMzEsImV4cCI6MTU3NDI3MTUzMX0.n4LC9ZRM6drT3_0JHOn4s2I_BNai69o_Q9vYzrjarg8';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiVGVzdGVyNTYiLCJpZCI6IjVkZDUzNmEyNTJiNGNlMjc0ODk1NjI0NSJ9LCJpYXQiOjE1NzQyNTQyOTksImV4cCI6MjE3OTA1NDI5OX0.8EUFqUOIw9FhcU43iT7aJI_4JB2somdYqtw-LdP2C1c';
 
 function noAuthorizationHeader(res, done, err) {
   if (err) {
@@ -84,6 +84,7 @@ function returnsArray(res, done, err) {
 describe('API thread endpoints', () => {
   let createdThread;
   let createdUser;
+  let thread_id;
 
   beforeEach(done => {
     createdUser = new User({
@@ -112,6 +113,7 @@ describe('API thread endpoints', () => {
           )
           .then(t => {
             createdThread = t;
+            thread_id = t._id;
             done();
           });
       });
