@@ -356,7 +356,7 @@ describe("API comments endpoints", () => {
             .set('Content-Type', 'application/json')
             .set('Authorization', 'Bearer ' + correctToken)
             .end((err, res) => {
-                returnsArray(res, done, err);
+                returnsArray(res, done, err); 
             });
     });
 
