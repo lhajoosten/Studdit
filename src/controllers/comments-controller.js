@@ -19,7 +19,8 @@ module.exports = {
         thread.comments.push(comment);
         thread.save();
       })
-      .then(() => res.status(200).json({ result: 'OK' }))
+        .then(() => Comment.findOne({author: req.userId, content: body.content, thread: body.thread}))
+      .then((c) => res.status(200).json({ result: c }))
       .catch(err => {
         if (err.name === 'ValidationError') {
           res.status(422).json({ err });
