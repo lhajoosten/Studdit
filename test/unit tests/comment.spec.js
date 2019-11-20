@@ -66,6 +66,79 @@ describe('Comments tests', () => {
       });
   });
 
+  it('Does not create comment without author', done => {
+    const newComment = new Comment({
+      thread: thread,
+      content: 'Some exciting stuff'
+    });
+
+    newComment.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
+  it('Does not create comment without content', done => {
+    const newComment = new Comment({
+      thread: thread,
+      author: user
+    });
+
+    newComment.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
+  
+  it('Does not create comment without thread', done => {
+    const newComment = new Comment({
+      content: 'Second test thread',
+      author: user
+    });
+
+    newComment.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
+  it('Does not create comment with wrong author type', done => {
+    const newComment = new Comment({
+      thread: thread,
+      content: 'Second test thread',
+      author: 1
+    });
+
+    newComment.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
+  it('Does not create comment with wrong thread type', done => {
+    const newComment = new Comment({
+      thread: 1,
+      content: 'Second test thread',
+      author: user
+    });
+
+    newComment.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
+  
+  it('Does not create comment without body', done => {
+    const newComment = new Comment({});
+
+    newComment.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
   it('Gets all comments', done => {
     Comment.find({}).then(comments => {
       assert(comments.length > 0);
