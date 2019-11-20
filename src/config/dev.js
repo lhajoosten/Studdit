@@ -3,7 +3,7 @@ const Comment = require('../models/comments-model');
 const Thread = require('../models/threads-model');
 
 module.exports = {
-  DB_URI: "mongodb+srv://lhajoost:Kaya1412@studdit-eklle.mongodb.net/test?retryWrites=true&w=majority",
+  DB_URI: "mongodb+srv://lhajoost:Kaya1412@studdit-eklle.mongodb.net/StudditDB?retryWrites=true&w=majority",
   logger: require("tracer").colorConsole({
     format: [
       "{{timestamp}} <{{title}}> {{message}} (in {{file}}:{{line}})", //default format
