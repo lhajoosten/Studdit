@@ -53,6 +53,64 @@ describe('Thread tests', () => {
       });
   });
 
+  it('Does not create thread without author', done => {
+    const newThread = new Thread({
+      title: 'Second test thread',
+      content: 'Some exciting stuff'
+    });
+
+    newThread.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
+  it('Does not create thread without content', done => {
+    const newThread = new Thread({
+      title: 'Second test thread',
+      author: user
+    });
+
+    newThread.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
+  it('Does not create thread without title', done => {
+    const newThread = new Thread({
+      author: user,
+      content: 'Some exciting stuff'
+    });
+
+    newThread.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
+  it('Does not create thread without body', done => {
+    const newThread = new Thread({});
+
+    newThread.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
+  it('Does not create when author type is not correct', done => {
+    const newThread = new Thread({
+      author: 1,
+      content: 'Some exciting stuff',
+      title: 'testing this'
+    });
+
+    newThread.save().catch(err => {
+      assert(err.name, 'ValidationError');
+      done();
+    });
+  });
+
   it('Gets all the threads', done => {
     Thread.find({}).then(threads => {
       assert(threads.length > 0);
@@ -77,6 +135,13 @@ describe('Thread tests', () => {
         assert(t.title === 'Updated the first thread');
         done();
       });
+  });
+
+  it('Does not update thread by id without body', done => {
+    Thread.findOneAndUpdate({ _id: thread_id }).then(err => {
+      assert(err, 'UnhandledPromiseRejection');
+      done();
+    });
   });
 
   it('Upvotes a thread by id', done => {

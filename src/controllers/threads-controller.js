@@ -17,7 +17,14 @@ module.exports = {
             .then(() => Thread.findOne({author: req.userId, title: body.title, content: body.content}))
             .then((t) => {
                 res.status(200).json({result: t});
-            });
+            })
+            .catch(err => {
+                if (err.name === 'ValidationError') {
+                  res.status(422).json({ err });
+                } else {
+                  res.status(500).json(err);
+                }
+              });
     },
 
     getAllThreads: (req, res, next) => {
@@ -53,7 +60,14 @@ module.exports = {
             .then(() => Thread.findById(id))
             .then((thread) => {
                 res.status(200).json({result: thread});
-            });
+            })
+            .catch(err => {
+                if (err.name === 'ValidationError') {
+                  res.status(422).json({ err });
+                } else {
+                  res.status(500).json(err);
+                }
+              });
     },
 
     deleteThreadById: (req, res, next) => {
