@@ -181,9 +181,9 @@ describe('API User endpoints', () => {
       .set('Content-Type', 'application/json')
       .set('Authorization', 'Bearer ' + token)
       .send({
-          name: username,
-          password: 'Testing123!',
-          active: true
+        name: username,
+        password: 'Testing123!',
+        active: true
       })
       .end((err, res) => {
         if (err) {

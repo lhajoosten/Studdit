@@ -62,7 +62,6 @@ describe('Endpoint not found', () => {
       });
   });
 
-  
   it('Should return not found 404 - POST(`/api/users/1`)', done => {
     chai
       .request(server)
@@ -77,7 +76,6 @@ describe('Endpoint not found', () => {
       });
   });
 
-  
   it('Should return not found 404 - POST(`/api/comment`)', done => {
     chai
       .request(server)
@@ -120,7 +118,6 @@ describe('Endpoint not found', () => {
       });
   });
 
-  
   it('Should return not found 404 - PUT(`/api/comments`)', done => {
     chai
       .request(server)
@@ -163,7 +160,6 @@ describe('Endpoint not found', () => {
       });
   });
 
-  
   it('Should return not found 404 - DELETE(`/api/comments`)', done => {
     chai
       .request(server)

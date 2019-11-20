@@ -5,11 +5,14 @@ mongoose.Promise = global.Promise;
 
 before(done => {
   mongoose
-    .connect('mongodb+srv://lhajoost:Kaya1412@studdit-eklle.mongodb.net/test?retryWrites=true&w=majority', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false
-    })
+    .connect(
+      'mongodb+srv://lhajoost:Kaya1412@studdit-eklle.mongodb.net/test?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false
+      }
+    )
     .then(() => {
       logger.info('Connected to the database');
       done();

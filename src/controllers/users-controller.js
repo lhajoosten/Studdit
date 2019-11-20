@@ -11,18 +11,21 @@ module.exports = {
   },
 
   createUser: (req, res, next) => {
-    const body = req.body
+    const body = req.body;
 
     User.findOne({ name: body.name }).then(foundUser => {
       if (foundUser == null) {
         let user = new User({
-            name: body.name,
-            password: body.password,
-            active: true
-         });        
-         user.save()
+          name: body.name,
+          password: body.password,
+          active: true
+        });
+        user
+          .save()
           .then(() => {
-            res.status(201).json({ message: 'Created new user successfully', code: 201 });
+            res
+              .status(201)
+              .json({ message: 'Created new user successfully', code: 201 });
           })
           .catch(err => {
             if (err.name === 'ValidationError') {
@@ -52,6 +55,13 @@ module.exports = {
       .then(() => User.find({ name: username }))
       .then(user => {
         res.status(200).json({ result: user });
+      })
+      .catch(err => {
+        if (err.name === 'ValidationError') {
+          res.status(422).json({ err });
+        } else {
+          res.status(500).json(err);
+        }
       });
   },
 

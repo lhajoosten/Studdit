@@ -10,7 +10,8 @@ const friendname = 'luccie12';
 
 const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiaGVua2llMTIiLCJpZCI6IjVkZDQyN2IwZDZiMzQ1MDZlOGEwNWE1NiJ9LCJpYXQiOjE1NzQxODUxMzEsImV4cCI6MTU3NDI3MTUzMX0.n4LC9ZRM6drT3_0JHOn4s2I_BNai69o_Q9vYzrjarg8';
-const token2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoibGFyc2llMTIiLCJpZCI6IjVkZDQ0MTgxZTI4ZmE3NDFmNDhmZWNhYSJ9LCJpYXQiOjE1NzQxOTE1MDAsImV4cCI6MTU3NDI3NzkwMH0.c-ybpsos7Kf5um5bf0JI-xA07nOChwasZVrbc2jjlbo';
+const token2 =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoibGFyc2llMTIiLCJpZCI6IjVkZDQ0MTgxZTI4ZmE3NDFmNDhmZWNhYSJ9LCJpYXQiOjE1NzQxOTE1MDAsImV4cCI6MTU3NDI3NzkwMH0.c-ybpsos7Kf5um5bf0JI-xA07nOChwasZVrbc2jjlbo';
 
 describe('Friendship API endpoints', () => {
   beforeEach(done => {
@@ -68,9 +69,7 @@ describe('Friendship API endpoints', () => {
       });
   });
 
-  afterEach(() => {
-
-  })
+  afterEach(() => {});
 
   it('Should be able to create a friendship', done => {
     chai
@@ -189,25 +188,25 @@ describe('Friendship API endpoints', () => {
 
   it('Should be able to delete a friendship', done => {
     chai
-    .request(server)
-    .delete('/api/friendships')
-    .set('Content-Type', 'application/json')
-    .set('Authorization', 'Bearer ' + token)
-    .send({
-      friendname: friendname
-    })
-    .end((err, res) => {
-      if (err) {
+      .request(server)
+      .delete('/api/friendships')
+      .set('Content-Type', 'application/json')
+      .set('Authorization', 'Bearer ' + token)
+      .send({
+        friendname: friendname
+      })
+      .end((err, res) => {
+        if (err) {
+          done();
+        }
+        expect(res).to.exist;
+        expect(res).to.have.status(200);
+        expect(res.body)
+          .to.have.property('message')
+          .to.be.a('string')
+          .to.equal('Friendship successfully deleted!');
         done();
-      }
-      expect(res).to.exist;
-      expect(res).to.have.status(200);
-      expect(res.body)
-        .to.have.property('message')
-        .to.be.a('string')
-        .to.equal('Friendship successfully deleted!');
-      done();
-    });
+      });
   });
 
   it('Should be not be able to delete a friendship if friendname is undefined', done => {
@@ -225,7 +224,7 @@ describe('Friendship API endpoints', () => {
         expect(res.body)
           .to.have.property('message')
           .to.be.a('string')
-          .to.equal("friend was not found");
+          .to.equal('friend was not found');
         done();
       });
   });
